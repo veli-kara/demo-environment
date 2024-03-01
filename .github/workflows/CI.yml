@@ -14,10 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - run: echo "Die Environment ist ${{ inputs.environment }}"
+      - run: echo "Der Wert der Environment-Variable DISCRIPTION ist ${{ vars.DESCRIPTION }}"
+      - run: echo "Mein Benutzer-Secret ist ${{ secrets.MONGODB_USERNAME }}"
