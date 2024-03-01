@@ -1,0 +1,20 @@
+name: demo
+
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+
+jobs:
+  build:
+    environment: "${{ inputs.environment }}"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: echo "Die Environment ist ${{ inputs.environment }}"
+      - run: echo "Der Wert der Environment-Variable DISCRIPTION ist ${{ vars.DESCRIPTION }}"
+      - run: echo "Mein Benutzer-Secret ist ${{ secrets.MONGODB_USERNAME }}"

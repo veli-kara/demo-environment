@@ -1,20 +1,23 @@
 name: CI
-
-on: 
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: environment
-        required: true
-
+on:
+  push:
+    branches:
+      - main
 jobs:
-  build:
-    environment: "${{ inputs.environment }}"
+  test:
+    environment: ???
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - run: echo "Die Environment ist ${{ inputs.environment }}"
-      - run: echo "Der Wert der Environment-Variable DISCRIPTION ist ${{ vars.DESCRIPTION }}"
-      - run: echo "Mein Benutzer-Secret ist ${{ secrets.MONGODB_USERNAME }}"
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run server
+        run: npm start & npx wait-on http://127.0.0.1:3000
+      - name: Run tests
+        run: npm test
