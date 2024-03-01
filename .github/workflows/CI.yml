@@ -7,7 +7,7 @@ on:
         required: true
 jobs:
   test:
-    environment: ???
+    environment: "${{ inputs.environment }}"
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
